@@ -1,7 +1,7 @@
 from manimlib import *
 import numpy as np
 import unittest
-from movies.dysphoria import SpikyVector
+from movies.scenes.dysphoria import SpikyVector
 
 sig_x = np.array([[0, 1],[1,0]])
 sig_y = np.array([[0, -1j],[1j, 0]])

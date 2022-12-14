@@ -1,4 +1,4 @@
-from movies.dysphoria import *
+from movies.scenes.dysphoria import *
 from ref.hold_constants import *
 import copy
 
