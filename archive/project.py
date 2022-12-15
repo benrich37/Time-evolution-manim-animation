@@ -1,5 +1,9 @@
-from movies.scenes.dysphoria import *
-from ref.hold_constants import *
+from classes.characters import lilGuy
+from classes.mathObjects import SpikyVector
+from methods.animation import fade_in_all, accelerate
+from methods.propogation import create_evolver, improper_evolver
+from ref.constants import *
+from manimlib import *
 import copy
 
 class Intro(Scene):
@@ -64,8 +68,6 @@ class Evolution(Scene):
                 "\\rangle")
 
         # Couldn't find a good accelerating func in the rate_func library
-        def accelerate(t, acc=3):
-            return t ** acc
 
         # # In place transformation to emphasize H acting on psi as an action, rather than an equality
         self.play(E[0].animate.shift(LEFT / 2),
@@ -1577,18 +1579,6 @@ class newHatNewSee(Scene):
         spiky_env.vec_draw[2][0].set_color(WHITE)
         spiky_env.vec_draw[2][1].set_color(WHITE)
         spiky_env.vec_draw[2][2].set_color(hex_blue)
-
-        def fade_out_all(list):
-            args = []
-            for i in np.arange(len(list)):
-                args.append(FadeOut(list[i]))
-            return args
-
-        def fade_in_all(list):
-            args = []
-            for i in np.arange(len(list)):
-                args.append(FadeIn(list[i]))
-            return args
 
         self.play(
             *fade_in_all(hat_spiky_env.axes),

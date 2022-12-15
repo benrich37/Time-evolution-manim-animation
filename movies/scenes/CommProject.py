@@ -1,5 +1,9 @@
-from methods import *
-from ref.hold_constants import *
+from manimlib import *
+from classes.characters import lilGuy
+from classes.mathObjects import SpikyVector
+from methods.animation import fade_in_all
+from methods.propogation import create_evolver, improper_evolver
+from ref.constants import *
 import copy
 
 class Intro(Scene):
@@ -436,6 +440,7 @@ class HSeesWho1(Scene):
 
         Psi_red_guyy = lilGuy(text = Tex("\\ket{\\psi}"),text_color = hex_red, look="left",scale=scale)
         Psi_red_guy = Psi_red_guyy.lilguy
+        eye_width = Psi_red_guy.eye_width
 
         hmem1_guy.shift(LEFT * 8)
         Psi_red_guy.shift(RIGHT * 4)
