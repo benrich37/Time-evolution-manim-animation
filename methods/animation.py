@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from manimlib import FadeOut, FadeIn
 
 

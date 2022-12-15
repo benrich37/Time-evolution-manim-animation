@@ -1,7 +1,7 @@
-import numpy
+import numpy as np
 from manimlib import Scene, ValueTracker, DEGREES, LEFT, RIGHT
 
-from classes.math_from_pm import SpikyVector
+from classes.mathObjects import SpikyVector
 from methods.propogation import create_evolver
 
 
