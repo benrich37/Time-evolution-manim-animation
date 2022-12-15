@@ -42,21 +42,10 @@ hat_0_color_array = np.abs(hat_U[0])
 hat_1_color_array = np.abs(hat_U[1])
 hat_2_color_array = np.abs(hat_U[2])
 
-# def rgb_to_hex(rgb):
-#     return '%02x%02x%02x' % rgb
-
-# def rgb_to_hex(r, g, b):
-#   return ('{:X}{:X}{:X}').format(r, g, b)
-
 hex_blue = rgb_to_hex(3, 3, 252)
 hex_red = rgb_to_hex(252, 3, 3)
 hex_green = rgb_to_hex(3, 252, 3)
 
-
-
-# hat_0_hex_color = rgb_to_hex((int(256*hat_0_color_array[0]), int(256*hat_0_color_array[1]), int(256*hat_0_color_array[2])))
-# hat_1_hex_color = rgb_to_hex((int(256*hat_1_color_array[0]), int(256*hat_1_color_array[1]), int(256*hat_1_color_array[2])))
-# hat_2_hex_color = rgb_to_hex((int(256*hat_2_color_array[0]), int(256*hat_2_color_array[1]), int(256*hat_2_color_array[2])))
 hat_0_hex_color = rgb_to_hex(int(256 * hat_0_color_array[0]), int(256 * hat_0_color_array[1]), int(256 * hat_0_color_array[2]))
 hat_1_hex_color = rgb_to_hex(int(256 * hat_1_color_array[0]), int(256 * hat_1_color_array[1]), int(256 * hat_1_color_array[2]))
 hat_2_hex_color = rgb_to_hex(int(256 * hat_2_color_array[0]), int(256 * hat_2_color_array[1]), int(256 * hat_2_color_array[2]))

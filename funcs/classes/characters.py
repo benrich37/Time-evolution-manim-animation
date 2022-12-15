@@ -1,4 +1,4 @@
-# import numpy
+import numpy as np
 from manimlib import Scene, Tex, GREY_B, Ellipse, WHITE, Circle, BLACK, LEFT, \
     VGroup, RIGHT
 
