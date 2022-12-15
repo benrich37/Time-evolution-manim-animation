@@ -1,8 +1,11 @@
 import numpy as np
 from manimlib import Scene, Tex
-from classes.characters import lilGuy
-from classes.mathObjects import SmoothieVector
-from ref.constants import y_p, sig_x
+import sys
+from os import path
+sys.path.append(path.join(path.dirname(__file__), '../..'))
+from funcs.classes.characters import lilGuy
+from funcs.classes.mathObjects import SmoothieVector
+from funcs.ref.constants import y_p, sig_x
 
 
 class testSmoothie(Scene):

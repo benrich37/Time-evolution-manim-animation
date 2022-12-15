@@ -1,8 +1,10 @@
 import numpy as np
 from manimlib import Scene, ValueTracker, DEGREES, LEFT, RIGHT
-
-from classes.mathObjects import SpikyVector
-from methods.propogation import create_evolver
+import sys
+from os import path
+sys.path.append(path.join(path.dirname(__file__), '../..'))
+from funcs.classes.mathObjects import SpikyVector
+from funcs.methods.propogation import create_evolver
 
 
 class moreDimension(Scene):

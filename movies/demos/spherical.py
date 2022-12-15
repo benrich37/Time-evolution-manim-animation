@@ -1,5 +1,4 @@
 import scipy.stats
-from ref.constants import *
 from manimlib import *
 
 scipy.stats.linregress()

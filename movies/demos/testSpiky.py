@@ -1,8 +1,11 @@
 import numpy as np
 from manimlib import Scene, ValueTracker, DEGREES
-from classes.mathObjects import SpikyVector
-from methods.propogation import prop_gen, prop_sig_z_pert
-from ref.constants import z_p
+import sys
+from os import path
+sys.path.append(path.join(path.dirname(__file__), '../..'))
+from funcs.classes.mathObjects import SpikyVector
+from funcs.methods.propogation import prop_gen, prop_sig_z_pert
+from funcs.ref.constants import z_p
 
 
 class testSpiky(Scene):
