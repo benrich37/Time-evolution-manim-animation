@@ -1,8 +1,7 @@
 import numpy as np
 from manimlib import Scene, ValueTracker, DEGREES
-
 from classes.mathObjects import SpikyVector
-
+from methods.propogation import prop_gen, prop_sig_z_pert
 from ref.hold_constants import z_p
 
 
