@@ -1,9 +1,8 @@
-import numpy
+import numpy as np
 from manimlib import Scene, Tex
-
-from classes.char_from_pm import lilGuy
-from classes.math_from_pm import SmoothieVector
-from ref.hold_constants import y_p, sig_x
+from classes.characters import lilGuy
+from classes.mathObjects import SmoothieVector
+from ref.constants import y_p, sig_x
 
 
 class testSmoothie(Scene):
