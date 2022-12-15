@@ -3,6 +3,8 @@ from manimlib import Scene, Tex, GREY_B, Ellipse, WHITE, Circle, BLACK, LEFT, \
     VGroup, RIGHT
 
 from ref.constants import *
+
+
 class lilGuy(Scene):
     text = Tex("\\ket{\\psi}")
     text_color = GREY_B

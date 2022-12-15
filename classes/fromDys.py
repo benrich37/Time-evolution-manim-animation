@@ -1,5 +1,3 @@
-import numpy
-
 # from methods.fromDys import prop_gen, prop_sig_z_pert, create_evolver
 # from ref.constants import y_p, sig_x, z_p
 

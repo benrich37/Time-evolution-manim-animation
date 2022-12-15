@@ -1,8 +1,7 @@
-import numpy
 import numpy as np
-from ref.hold_constants import *
 from manimlib import Scene, Tex, BLUE, RED, WHITE, UP, ThreeDAxes, OUT, LEFT, \
     RIGHT, ValueTracker, Vector
+from ref.hold_constants import *
 
 
 class AxisVector(Scene):

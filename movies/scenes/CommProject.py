@@ -1,16 +1,19 @@
 from manimlib import *
-from classes.characters import lilGuy
-from classes.mathObjects import SpikyVector
+# from ... import methods, classes, ref
 from methods.animation import fade_in_all
 from methods.propogation import create_evolver, improper_evolver
+from classes.characters import lilGuy
+from classes.mathObjects import SpikyVector
 from ref.constants import *
 import copy
+
+imgs_path = '../../ref/imgs/'
 
 class Intro(Scene):
     def construct(self):
         psi_pure = Tex("\\psi").scale(2)
-        electron = ImageMobject("imgs/electron.png").scale(1/3).shift(RIGHT*3).shift(UP*2)
-        spring = ImageMobject("imgs/spring.png").scale(1 / 3).shift(RIGHT * 3).shift(DOWN * 2)
+        electron = ImageMobject(imgs_path + "electron.png").scale(1/3).shift(RIGHT*3).shift(UP*2)
+        spring = ImageMobject(imgs_path + "spring.png").scale(1 / 3).shift(RIGHT * 3).shift(DOWN * 2)
         self.add(psi_pure)
         self.play(FadeIn(electron),FadeIn(spring))
 
