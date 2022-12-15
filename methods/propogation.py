@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ref.hold_constants import x_vals, x_U, x_U_dag, y_vals, y_U, y_U_dag, \
     z_vals, z_U, z_U_dag, z_pert_vals, z_pert_U, z_pert_U_dag
