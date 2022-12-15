@@ -14,3 +14,7 @@ def fade_in_all(list):
     for i in np.arange(len(list)):
         args.append(FadeIn(list[i]))
     return args
+
+
+def accelerate(t, acc=3):
+    return t ** acc
