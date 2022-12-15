@@ -30,33 +30,6 @@ x_m = np.array([1,-1],dtype=complex) * (1/np.sqrt(2))
 y_p = np.array([1,1j],dtype=complex) * (1/np.sqrt(2))
 y_m = np.array([1,-1j],dtype=complex) * (1/np.sqrt(2))
 
-
-def prop_sig_x(dt):
-    prop_diag = np.diag(np.exp(-1j * dt * x_vals))
-    return np.dot(x_U, np.dot(prop_diag, x_U_dag))
-
-def prop_sig_y(dt):
-    prop_diag = np.diag(np.exp(-1j * dt * y_vals))
-    return np.dot(y_U, np.dot(prop_diag, y_U_dag))
-
-def prop_sig_z(dt):
-    prop_diag = np.diag(np.exp(-1j * dt * z_vals))
-    return np.dot(z_U, np.dot(prop_diag, z_U_dag))
-
-def prop_gen(dt, basis):
-    # Make our propogator
-    if basis == "x":
-        propogator = prop_sig_x(dt)
-    elif basis == "y":
-        propogator = prop_sig_y(dt)
-    elif basis == "z":
-        propogator = prop_sig_z(dt)
-    return propogator
-
-def prop_sig_z_pert(dt):
-    prop_diag = np.diag(np.exp(-1j * dt * z_pert_vals))
-    return np.dot(z_pert_U, np.dot(prop_diag, z_pert_U_dag))
-
 class vectormath(Scene):
     def construct(self):
         # Turn on for modulus circles

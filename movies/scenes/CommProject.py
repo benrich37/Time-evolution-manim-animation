@@ -1,5 +1,9 @@
-from movies.dysphoria import *
-from ref.hold_constants import *
+from manimlib import *
+from classes.characters import lilGuy
+from classes.mathObjects import SpikyVector
+from methods.animation import fade_in_all
+from methods.propogation import create_evolver, improper_evolver
+from ref.constants import *
 import copy
 
 class Intro(Scene):
@@ -403,47 +407,18 @@ class HSeesWho1(Scene):
     def construct(self):
 
         scale = .7
-        pup_radius = scale/2
-        eye_width = scale*2
-        eye_height = scale*4
-        char_scale = scale*5
 
-        # ######################
-        # eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        # eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        # pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-        #     eye_white_left.get_right()+pup_radius*LEFT)
-        # pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-        #     eye_white_right.get_right() + pup_radius * LEFT)
-        # h_eye_left = VGroup(eye_white_left, pupil_left).shift(LEFT*eye_width)
-        # h_eye_right = VGroup(eye_white_right, pupil_right).shift(RIGHT*eye_width)
-        # eyes = VGroup(h_eye_left,h_eye_right).scale(1/5).shift(RIGHT*.1)
-        # H = Tex("\\hat{U}").set_color(GREY_B).scale(char_scale)
-        # H_guy = VGroup(H,eyes)
-        # ######################
-
-        H_guyy = lilGuy(text = Tex("\\hat{U}"))
+        H_guyy = lilGuy(text = Tex("\\hat{U}"),scale=scale)
         H_guy = H_guyy.lilguy
+        H_guy[1].shift(LEFT*0.1)
 
-        ######################
-        eye_white_left_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_white_ket = Circle(radius=pup_radius,color=BLACK,fill_opacity=1).move_to(
-            eye_white_left_white_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_white_ket = Circle(radius=pup_radius,color=BLACK,fill_opacity=1).move_to(
-            eye_white_right_white_ket.get_left() + pup_radius * RIGHT)
-        h_eye_left_white_ket = VGroup(eye_white_left_white_ket,pupil_left_white_ket).shift(LEFT * eye_width)
-        h_eye_right_white_ket = VGroup(eye_white_right_white_ket,pupil_right_white_ket).shift(RIGHT * eye_width)
-        eyes = VGroup(h_eye_left_white_ket, h_eye_right_white_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_white = Tex("\\ket{\\psi}").set_color(GREY_B).scale(char_scale)
-        Psi_white_guy = VGroup(Psi_white, eyes)
-        ######################
+        Psi_white_guyy=lilGuy(text = Tex("\\ket{\\psi}"), look="left",scale=scale)
+        Psi_white_guy = Psi_white_guyy.lilguy
 
 
         H_guy.shift(LEFT*8)
         Psi_white_guy.shift(RIGHT*4)
         self.play(FadeIn(Psi_white_guy),FadeIn(H_guy))
-        # self.add(Psi_white_guy,H_guy)
         self.play(H_guy.animate.shift(RIGHT*6),run_time=3)
         self.play(H_guy[1][0][1].animate.shift(LEFT*H_guy[1][0][1].get_width()),
                   H_guy[1][1][1].animate.shift(LEFT*H_guy[1][1][1].get_width()),
@@ -460,33 +435,12 @@ class HSeesWho1(Scene):
         self.play(H_guy.animate.shift(UP*2.3),Psi_white_guy.animate.shift(UP*2.3))
         self.play(H_guy.animate.set_opacity(0.3),Psi_white_guy.animate.set_opacity(0.3))
 
-        ######################
-        hmem1_eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        hmem1_eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        hmem1_pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            hmem1_eye_white_left.get_right() + pup_radius * LEFT)
-        hmem1_pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            hmem1_eye_white_right.get_right() + pup_radius * LEFT)
-        hmem1_h_eye_left = VGroup(hmem1_eye_white_left, hmem1_pupil_left).shift(LEFT * eye_width)
-        hmem1_h_eye_right = VGroup(hmem1_eye_white_right, hmem1_pupil_right).shift(RIGHT * eye_width)
-        eyes = VGroup(hmem1_h_eye_left, hmem1_h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        hmem1 = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        hmem1_guy = VGroup(hmem1, eyes)
-        ######################
+        hmem1_guyy = lilGuy(text = Tex("\\hat{H}"),scale=scale)
+        hmem1_guy = hmem1_guyy.lilguy
 
-        ######################
-        eye_white_left_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left_red_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right_red_ket.get_left() + pup_radius * RIGHT)
-        h_eye_left_red_ket = VGroup(eye_white_left_red_ket, pupil_left_red_ket).shift(LEFT * eye_width)
-        h_eye_right_red_ket = VGroup(eye_white_right_red_ket, pupil_right_red_ket).shift(RIGHT * eye_width)
-        eyes = VGroup(h_eye_left_red_ket, h_eye_right_red_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_red = Tex("\\ket{\\psi}").set_color(hex_red).scale(char_scale)
-        Psi_red_guy = VGroup(Psi_red, eyes)
-        ######################
+        Psi_red_guyy = lilGuy(text = Tex("\\ket{\\psi}"),text_color = hex_red, look="left",scale=scale)
+        Psi_red_guy = Psi_red_guyy.lilguy
+        eye_width = Psi_red_guy.eye_width
 
         hmem1_guy.shift(LEFT * 8)
         Psi_red_guy.shift(RIGHT * 4)
@@ -509,9 +463,6 @@ class HSeesWho1(Scene):
                   Psi_red_guy[1][1][1].animate.shift(RIGHT * Psi_red_guy[1][0][1].get_width()/2),
                   run_time=2)
 
-        ######################
-
-
         self.play(FadeOut(red_child),FadeOut(Psi_red_guy),
                   H_guy.animate.set_opacity(1),
                   Psi_white_guy.animate.set_opacity(1))
@@ -528,33 +479,11 @@ class HSeesWho1(Scene):
         self.play(H_guy.animate.set_opacity(0.5),
                   Psi_white_guy.animate.set_opacity(0.5))
 
-        ######################
-        hmem2_eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        hmem2_eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        hmem2_pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            hmem2_eye_white_left.get_right() + pup_radius * LEFT)
-        hmem2_pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            hmem2_eye_white_right.get_right() + pup_radius * LEFT)
-        hmem2_h_eye_left = VGroup(hmem2_eye_white_left, hmem2_pupil_left).shift(LEFT * eye_width)
-        hmem2_h_eye_right = VGroup(hmem2_eye_white_right, hmem2_pupil_right).shift(RIGHT * eye_width)
-        eyes = VGroup(hmem2_h_eye_left, hmem2_h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        hmem2 = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        hmem2_guy = VGroup(hmem2, eyes)
-        ######################
+        hmem2_guyy = lilGuy(text=Tex("\\hat{H}"),scale=scale)
+        hmem2_guy = hmem2_guyy.lilguy
 
-        ######################
-        eye_white_left_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left_blue_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right_blue_ket.get_left() + pup_radius * RIGHT)
-        h_eye_left_blue_ket = VGroup(eye_white_left_blue_ket, pupil_left_blue_ket).shift(LEFT * eye_width)
-        h_eye_right_blue_ket = VGroup(eye_white_right_blue_ket, pupil_right_blue_ket).shift(RIGHT * eye_width)
-        eyes = VGroup(h_eye_left_blue_ket, h_eye_right_blue_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_blue = Tex("\\ket{\\psi}").set_color(hex_blue).scale(char_scale)
-        Psi_blue_guy = VGroup(Psi_blue, eyes)
-        ######################
+        Psi_blue_guyy = lilGuy(text=Tex("\\ket{\\psi}"), text_color=hex_blue, look="left",scale=scale)
+        Psi_blue_guy = Psi_blue_guyy.lilguy
 
         hmem2_guy.shift(LEFT * 8)
         Psi_blue_guy.shift(RIGHT * 4)
@@ -577,33 +506,11 @@ class HSeesWho1(Scene):
                   run_time=0.5)
         self.play(FadeOut(blue_child), FadeOut(Psi_blue_guy))
 
-        ######################
-        hmem3_eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        hmem3_eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        hmem3_pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            hmem3_eye_white_left.get_right() + pup_radius * LEFT)
-        hmem3_pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            hmem3_eye_white_right.get_right() + pup_radius * LEFT)
-        hmem3_h_eye_left = VGroup(hmem3_eye_white_left, hmem3_pupil_left).shift(LEFT * eye_width)
-        hmem3_h_eye_right = VGroup(hmem3_eye_white_right, hmem3_pupil_right).shift(RIGHT * eye_width)
-        eyes = VGroup(hmem3_h_eye_left, hmem3_h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        hmem3 = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        hmem3_guy = VGroup(hmem3, eyes)
-        ######################
+        hmem3_guyy = lilGuy(text=Tex("\\hat{H}"),scale=scale)
+        hmem3_guy = hmem3_guyy.lilguy
 
-        ######################
-        eye_white_left_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left_yellow_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right_yellow_ket.get_left() + pup_radius * RIGHT)
-        h_eye_left_yellow_ket = VGroup(eye_white_left_yellow_ket, pupil_left_yellow_ket).shift(LEFT * eye_width)
-        h_eye_right_yellow_ket = VGroup(eye_white_right_yellow_ket, pupil_right_yellow_ket).shift(RIGHT * eye_width)
-        eyes = VGroup(h_eye_left_yellow_ket, h_eye_right_yellow_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_yellow = Tex("\\ket{\\psi}").set_color(hex_green).scale(char_scale)
-        Psi_yellow_guy = VGroup(Psi_yellow, eyes)
-        ######################
+        Psi_yellow_guyy = lilGuy(text=Tex("\\ket{\\psi}"), text_color=hex_green, look="left",scale=scale)
+        Psi_yellow_guy = Psi_yellow_guyy.lilguy
 
         hmem3_guy.shift(LEFT * 8)
         Psi_yellow_guy.shift(RIGHT * 4)
@@ -629,38 +536,13 @@ class HSeesWho1(Scene):
 class HSeesWho2(Scene):
     def construct(self):
         scale = .7
-        pup_radius = scale / 2
-        eye_width = scale * 2
-        eye_height = scale * 4
-        char_scale = scale * 5
 
-        ######################
-        eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left.get_right() + pup_radius * LEFT)
-        pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right.get_right() + pup_radius * LEFT)
-        h_eye_left = VGroup(eye_white_left, pupil_left).shift(LEFT * eye_width)
-        h_eye_right = VGroup(eye_white_right, pupil_right).shift(RIGHT * eye_width)
-        h_eyes = VGroup(h_eye_left, h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        H = Tex("\\hat{U}").set_color(GREY_B).scale(char_scale)
-        H_guy = VGroup(H, h_eyes)
-        ######################
+        H_guyy = lilGuy(text=Tex("\\hat{U}"))
+        H_guy = H_guyy.lilguy
+        H_guy[1].shift(LEFT * 0.1)
 
-        ######################
-        eye_white_left_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left_white_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right_white_ket.get_left() + pup_radius * RIGHT)
-        eye_left_white_ket = VGroup(eye_white_left_white_ket, pupil_left_white_ket).shift(LEFT * eye_width)
-        eye_right_white_ket = VGroup(eye_white_right_white_ket, pupil_right_white_ket).shift(RIGHT * eye_width)
-        psi_eyes = VGroup(eye_left_white_ket, eye_right_white_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_white = Tex("\\ket{\\psi}").set_color(GREY_B).scale(char_scale)
-        Psi_white_guy = VGroup(Psi_white, psi_eyes)
-        ######################
+        Psi_white_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left")
+        Psi_white_guy = Psi_white_guyy.lilguy
 
         # Restablishing scene from HSeesWho1
         H_guy.shift(LEFT * 2)
@@ -677,84 +559,26 @@ class HSeesWho2(Scene):
         ######################
         ##### NEW SCENE #####
         ######################
-        mem1eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left.get_right() + pup_radius * LEFT)
-        mem1pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right.get_right() + pup_radius * LEFT)
-        mem1h_eye_left = VGroup(mem1eye_white_left, mem1pupil_left).shift(LEFT * eye_width)
-        mem1h_eye_right = VGroup(mem1eye_white_right, mem1pupil_right).shift(RIGHT * eye_width)
-        mem1h_eyes = VGroup(mem1h_eye_left, mem1h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        mem1H = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        mem1H_guy = VGroup(mem1H, mem1h_eyes)
-        ######################
+        mem1H_guyy = lilGuy(text=Tex("\\hat{H}"))
+        mem1H_guy = mem1H_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_white_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_white_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_white_ket = VGroup(mem1eye_white_left_white_ket, mem1pupil_left_white_ket).shift(LEFT * eye_width)
-        mem1eye_right_white_ket = VGroup(mem1eye_white_right_white_ket, mem1pupil_right_white_ket).shift(RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_white_ket, mem1eye_right_white_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_white = Tex("\\ket{\\psi}").set_color(GREY_B).scale(char_scale)
-        mem1Psi_white_guy = VGroup(mem1Psi_white, mem1psi_eyes)
-        ######################
+
+        mem1Psi_white_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left")
+        mem1Psi_white_guy = mem1Psi_white_guyy.lilguy
 
         mem1H_guy.shift(LEFT * 2)
         mem1Psi_white_guy.shift(RIGHT * 4)
         self.play(FadeIn(mem1Psi_white_guy),
                   FadeIn(mem1H_guy))
-        # self.add(mem1Psi_white_guy, mem1H_guy)
 
+        mem1Psi_blue_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left",text_color=hex_blue)
+        mem1Psi_blue_guy = mem1Psi_blue_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_blue_ket = VGroup(mem1eye_white_left_blue_ket, mem1pupil_left_blue_ket).shift(LEFT * eye_width)
-        mem1eye_right_blue_ket = VGroup(mem1eye_white_right_blue_ket, mem1pupil_right_blue_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_blue_ket, mem1eye_right_blue_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_blue = Tex("\\ket{\\psi}").set_color(hex_blue).scale(char_scale)
-        mem1Psi_blue_guy = VGroup(mem1Psi_blue, mem1psi_eyes)
-        ######################
+        mem1Psi_red_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_red)
+        mem1Psi_red_guy = mem1Psi_red_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_red_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_red_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_red_ket = VGroup(mem1eye_white_left_red_ket, mem1pupil_left_red_ket).shift(LEFT * eye_width)
-        mem1eye_right_red_ket = VGroup(mem1eye_white_right_red_ket, mem1pupil_right_red_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_red_ket, mem1eye_right_red_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_red = Tex("\\ket{\\psi}").set_color(hex_red).scale(char_scale)
-        mem1Psi_red_guy = VGroup(mem1Psi_red, mem1psi_eyes)
-        ######################
-
-        ######################
-        mem1eye_white_left_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_yellow_ket = VGroup(mem1eye_white_left_yellow_ket, mem1pupil_left_yellow_ket).shift(LEFT * eye_width)
-        mem1eye_right_yellow_ket = VGroup(mem1eye_white_right_yellow_ket, mem1pupil_right_yellow_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_yellow_ket, mem1eye_right_yellow_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_yellow = Tex("\\ket{\\psi}").set_color(hex_green).scale(char_scale)
-        mem1Psi_yellow_guy = VGroup(mem1Psi_yellow, mem1psi_eyes)
-        ######################
+        mem1Psi_yellow_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_green)
+        mem1Psi_yellow_guy = mem1Psi_yellow_guyy.lilguy
 
         ######################
         mem1Psi_red_guy.scale(1 / 2).move_to(mem1Psi_white_guy.get_center())
@@ -905,22 +729,9 @@ class SpikyShowoff(Scene):
 
         ######################
         scale = .7
-        pup_radius = scale / 2
-        eye_width = scale * 2
-        eye_height = scale * 4
-        char_scale = scale * 5
-        eye_white_left_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left_white_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right_white_ket.get_left() + pup_radius * RIGHT)
-        eye_left_white_ket = VGroup(eye_white_left_white_ket, pupil_left_white_ket).shift(LEFT * eye_width)
-        eye_right_white_ket = VGroup(eye_white_right_white_ket, pupil_right_white_ket).shift(RIGHT * eye_width)
-        psi_eyes = VGroup(eye_left_white_ket, eye_right_white_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_white = Tex("\\ket{\\psi}").set_color(GREY_B).scale(char_scale)
-        Psi_white_guy = VGroup(Psi_white, psi_eyes)
-        ######################
+
+        Psi_white_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left")
+        Psi_white_guy = Psi_white_guyy.lilguy
 
         Psi_white_guy.scale(3)
         self.play(FadeIn(Psi_white_guy))
@@ -954,51 +765,14 @@ class SpikyShowoff(Scene):
             *fade_in(spiky_env.give_vec())
         )
 
-        ######################
-        mem1eye_white_left_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_blue_ket = VGroup(mem1eye_white_left_blue_ket, mem1pupil_left_blue_ket).shift(LEFT * eye_width)
-        mem1eye_right_blue_ket = VGroup(mem1eye_white_right_blue_ket, mem1pupil_right_blue_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_blue_ket, mem1eye_right_blue_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_blue = Tex("\\ket{\\psi}").set_color(hex_blue).scale(char_scale)
-        mem1Psi_blue_guy = VGroup(mem1Psi_blue, mem1psi_eyes)
-        ######################
+        mem1Psi_blue_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_blue)
+        mem1Psi_blue_guy = mem1Psi_blue_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_red_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_red_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_red_ket = VGroup(mem1eye_white_left_red_ket, mem1pupil_left_red_ket).shift(LEFT * eye_width)
-        mem1eye_right_red_ket = VGroup(mem1eye_white_right_red_ket, mem1pupil_right_red_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_red_ket, mem1eye_right_red_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_red = Tex("\\ket{\\psi}").set_color(hex_red).scale(char_scale)
-        mem1Psi_red_guy = VGroup(mem1Psi_red, mem1psi_eyes)
-        ######################
+        mem1Psi_red_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_red)
+        mem1Psi_red_guy = mem1Psi_red_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_yellow_ket = VGroup(mem1eye_white_left_yellow_ket, mem1pupil_left_yellow_ket).shift(
-            LEFT * eye_width)
-        mem1eye_right_yellow_ket = VGroup(mem1eye_white_right_yellow_ket, mem1pupil_right_yellow_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_yellow_ket, mem1eye_right_yellow_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_yellow = Tex("\\ket{\\psi}").set_color(hex_green).scale(char_scale)
-        mem1Psi_yellow_guy = VGroup(mem1Psi_yellow, mem1psi_eyes)
-        ######################
+        mem1Psi_yellow_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_green)
+        mem1Psi_yellow_guy = mem1Psi_yellow_guyy.lilguy
 
         mem1Psi_red_guy.move_to(spiky_env.origins[0]).shift(RIGHT*3)
         mem1Psi_yellow_guy.move_to(spiky_env.origins[1]).shift(RIGHT * 3)
@@ -1074,19 +848,9 @@ class SpikyShowoff(Scene):
                   frame_phi.animate.set_value(0)
                   )
 
-        ######################
-        eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left.get_right() + pup_radius * LEFT)
-        pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right.get_right() + pup_radius * LEFT)
-        h_eye_left = VGroup(eye_white_left, pupil_left).shift(LEFT * eye_width)
-        h_eye_right = VGroup(eye_white_right, pupil_right).shift(RIGHT * eye_width)
-        h_eyes = VGroup(h_eye_left, h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        H = Tex("\\hat{U}").set_color(GREY_B).scale(char_scale)
-        H_guy = VGroup(H, h_eyes)
-        ######################
+        H_guyy = lilGuy(text=Tex("\\hat{U}"))
+        H_guy = H_guyy.lilguy
+        H_guy[1].shift(LEFT * 0.1)
 
         H_guy.move_to(spiky_env.origins[1]).shift(LEFT*6).scale(2)
         self.add(H_guy)
@@ -1144,31 +908,15 @@ class SpikyShowoff(Scene):
 
 
 
-
-
         spiky_env.vec = np.dot(sample_evolver, spiky_env.vec)
         self.play(
             FadeOut(H_guy3),
             *spiky_env.tracker_set_vals()
         )
 
-        ######################
-        eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left.get_right() + pup_radius * LEFT)
-        pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right.get_right() + pup_radius * LEFT)
-        h_eye_left = VGroup(eye_white_left, pupil_left).shift(LEFT * eye_width)
-        h_eye_right = VGroup(eye_white_right, pupil_right).shift(RIGHT * eye_width)
-        h_eyes = VGroup(h_eye_left, h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        H = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        H_guyy = VGroup(H, h_eyes)
-        ######################
-
-
+        H_guyyy = lilGuy(text=Tex("\\hat{H}"))
+        H_guyy = H_guyyy.lilguy
         H_guyy.move_to(spiky_env.origins[1]).shift(LEFT * 5).scale(2)
-
 
         self.play(
             self.camera.frame.animate.shift(OUT*5),
@@ -1190,9 +938,6 @@ class SpikyShowoff(Scene):
             frame_phi.animate.set_value(60)
         )
 
-
-
-
         self.camera.frame.clear_updaters()
 
 class SpikyShowoff2(Scene):
@@ -1210,21 +955,8 @@ class SpikyShowoff2(Scene):
 
         ######################
         scale = .7
-        pup_radius = scale / 2
-        eye_width = scale * 2
-        eye_height = scale * 4
-        char_scale = scale * 5
-        eye_white_left_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left_white_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right_white_ket.get_left() + pup_radius * RIGHT)
-        eye_left_white_ket = VGroup(eye_white_left_white_ket, pupil_left_white_ket).shift(LEFT * eye_width)
-        eye_right_white_ket = VGroup(eye_white_right_white_ket, pupil_right_white_ket).shift(RIGHT * eye_width)
-        psi_eyes = VGroup(eye_left_white_ket, eye_right_white_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_white = Tex("\\ket{\\psi}").set_color(GREY_B).scale(char_scale)
-        Psi_white_guy = VGroup(Psi_white, psi_eyes)
+        Psi_white_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left")
+        Psi_white_guy = Psi_white_guyy.lilguy
         ######################
         frame_theta = ValueTracker(-30)
         frame_phi = ValueTracker(60)
@@ -1238,73 +970,23 @@ class SpikyShowoff2(Scene):
 
         self.add(*spiky_env.axes,*spiky_env.brackets,*spiky_env.give_vec())
 
-        ######################
-        mem1eye_white_left_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_blue_ket = VGroup(mem1eye_white_left_blue_ket, mem1pupil_left_blue_ket).shift(LEFT * eye_width)
-        mem1eye_right_blue_ket = VGroup(mem1eye_white_right_blue_ket, mem1pupil_right_blue_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_blue_ket, mem1eye_right_blue_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_blue = Tex("\\ket{\\psi}").set_color(hex_blue).scale(char_scale)
-        mem1Psi_blue_guy = VGroup(mem1Psi_blue, mem1psi_eyes)
-        ######################
+        mem1Psi_blue_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_blue)
+        mem1Psi_blue_guy = mem1Psi_blue_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_red_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_red_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_red_ket = VGroup(mem1eye_white_left_red_ket, mem1pupil_left_red_ket).shift(LEFT * eye_width)
-        mem1eye_right_red_ket = VGroup(mem1eye_white_right_red_ket, mem1pupil_right_red_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_red_ket, mem1eye_right_red_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_red = Tex("\\ket{\\psi}").set_color(hex_red).scale(char_scale)
-        mem1Psi_red_guy = VGroup(mem1Psi_red, mem1psi_eyes)
-        ######################
+        mem1Psi_red_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_red)
+        mem1Psi_red_guy = mem1Psi_red_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_yellow_ket = VGroup(mem1eye_white_left_yellow_ket, mem1pupil_left_yellow_ket).shift(
-            LEFT * eye_width)
-        mem1eye_right_yellow_ket = VGroup(mem1eye_white_right_yellow_ket, mem1pupil_right_yellow_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_yellow_ket, mem1eye_right_yellow_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_yellow = Tex("\\ket{\\psi}").set_color(hex_green).scale(char_scale)
-        mem1Psi_yellow_guy = VGroup(mem1Psi_yellow, mem1psi_eyes)
-        ######################
+        mem1Psi_yellow_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_green)
+        mem1Psi_yellow_guy = mem1Psi_yellow_guyy.lilguy
 
         mem1Psi_red_guy.move_to(spiky_env.origins[0]).shift(RIGHT*3)
         mem1Psi_yellow_guy.move_to(spiky_env.origins[1]).shift(RIGHT * 3)
         mem1Psi_blue_guy.move_to(spiky_env.origins[2]).shift(RIGHT * 3)
 
-
-
         spiky_env.vec = blue
 
-        ######################
-        eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left.get_right() + pup_radius * LEFT)
-        pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right.get_right() + pup_radius * LEFT)
-        h_eye_left = VGroup(eye_white_left, pupil_left).shift(LEFT * eye_width)
-        h_eye_right = VGroup(eye_white_right, pupil_right).shift(RIGHT * eye_width)
-        h_eyes = VGroup(h_eye_left, h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        H = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        H_guy = VGroup(H, h_eyes)
-        ######################
+        H_guyy = lilGuy(text=Tex("\\hat{H}"))
+        H_guy = H_guyy.lilguy
 
 
         H_guy.move_to(spiky_env.origins[1]).shift(LEFT * 5).scale(2)
@@ -1384,70 +1066,18 @@ class newHatNewSee(Scene):
                                          phi=frame_phi.get_value(),
                                          units=DEGREES)
         )
-        ######################
-        scale = .7
-        pup_radius = scale / 2
-        eye_width = scale * 2
-        eye_height = scale * 4
-        char_scale = scale * 5
-        eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left.get_right() + pup_radius * LEFT)
-        pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right.get_right() + pup_radius * LEFT)
-        h_eye_left = VGroup(eye_white_left, pupil_left).shift(LEFT * eye_width)
-        h_eye_right = VGroup(eye_white_right, pupil_right).shift(RIGHT * eye_width)
-        h_eyes = VGroup(h_eye_left, h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        H = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        H_guy = VGroup(H, h_eyes).scale(2)
-        ######################
 
-        ######################
-        mem1eye_white_left_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_blue_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_blue_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_blue_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_blue_ket = VGroup(mem1eye_white_left_blue_ket, mem1pupil_left_blue_ket).shift(LEFT * eye_width)
-        mem1eye_right_blue_ket = VGroup(mem1eye_white_right_blue_ket, mem1pupil_right_blue_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_blue_ket, mem1eye_right_blue_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_blue = Tex("\\ket{\\psi}").set_color(hex_blue).scale(char_scale)
-        mem1Psi_blue_guy = VGroup(mem1Psi_blue, mem1psi_eyes)
-        ######################
+        H_guyy = lilGuy(text=Tex("\\hat{H}"))
+        H_guy = H_guyy.lilguy.scale(2)
 
-        ######################
-        mem1eye_white_left_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_red_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_red_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_red_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_red_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_red_ket = VGroup(mem1eye_white_left_red_ket, mem1pupil_left_red_ket).shift(LEFT * eye_width)
-        mem1eye_right_red_ket = VGroup(mem1eye_white_right_red_ket, mem1pupil_right_red_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_red_ket, mem1eye_right_red_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_red = Tex("\\ket{\\psi}").set_color(hex_red).scale(char_scale)
-        mem1Psi_red_guy = VGroup(mem1Psi_red, mem1psi_eyes)
-        ######################
+        mem1Psi_blue_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_blue)
+        mem1Psi_blue_guy = mem1Psi_blue_guyy.lilguy
 
-        ######################
-        mem1eye_white_left_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1eye_white_right_yellow_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        mem1pupil_left_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_left_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1pupil_right_yellow_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            mem1eye_white_right_yellow_ket.get_left() + pup_radius * RIGHT)
-        mem1eye_left_yellow_ket = VGroup(mem1eye_white_left_yellow_ket, mem1pupil_left_yellow_ket).shift(
-            LEFT * eye_width)
-        mem1eye_right_yellow_ket = VGroup(mem1eye_white_right_yellow_ket, mem1pupil_right_yellow_ket).shift(
-            RIGHT * eye_width)
-        mem1psi_eyes = VGroup(mem1eye_left_yellow_ket, mem1eye_right_yellow_ket).scale(1 / 5).shift(LEFT * .1)
-        mem1Psi_yellow = Tex("\\ket{\\psi}").set_color(hex_green).scale(char_scale)
-        mem1Psi_yellow_guy = VGroup(mem1Psi_yellow, mem1psi_eyes)
-        ######################
+        mem1Psi_red_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_red)
+        mem1Psi_red_guy = mem1Psi_red_guyy.lilguy
+
+        mem1Psi_yellow_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left", text_color=hex_green)
+        mem1Psi_yellow_guy = mem1Psi_yellow_guyy.lilguy
 
         spiky_env = SpikyVector(False, 3, 1, green)
         H_guy.move_to(spiky_env.origins[1]).shift(LEFT * 5)
@@ -1538,22 +1168,6 @@ class newHatNewSee(Scene):
                   FadeIn(hat_2_guy)
                   )
 
-        # spiny_env_vec_i = copy.copy(spiky_env.vec)
-
-        # hat_0_vec_proj = np.dot(np.conjugate(hat_U[0]), spiny_env_vec_i)
-        # hat_1_vec_proj = np.dot(np.conjugate(hat_U[1]), spiny_env_vec_i)
-        # hat_2_vec_proj = np.dot(np.conjugate(hat_U[2]), spiny_env_vec_i)
-        # hat_vec_i = np.array([[-1.0],
-        #                       [0],
-        #                       [1.0]
-        #                       ],dtype=complex)
-
-        # hat_vec_i = np.array([[hat_0_vec_proj][0],
-        #                       [hat_1_vec_proj][0],
-        #                       [hat_2_vec_proj][0]
-        #                       ])
-
-
         # Giving it blue because that has the corresponding index to first eigenvector in hat_mustache_H
         hat_spiky_env = SpikyVector(False,3,1,blue)
         spiky_env.vec = hat_U[0]
@@ -1578,17 +1192,7 @@ class newHatNewSee(Scene):
         spiky_env.vec_draw[2][1].set_color(WHITE)
         spiky_env.vec_draw[2][2].set_color(hex_blue)
 
-        def fade_out_all(list):
-            args = []
-            for i in np.arange(len(list)):
-                args.append(FadeOut(list[i]))
-            return args
 
-        def fade_in_all(list):
-            args = []
-            for i in np.arange(len(list)):
-                args.append(FadeIn(list[i]))
-            return args
 
         self.play(
             *fade_in_all(hat_spiky_env.axes),
@@ -1631,40 +1235,12 @@ class judgment(Scene):
     def construct(self):
         ######################
         scale = .7
-        pup_radius = scale / 2
-        eye_width = scale * 2
-        eye_height = scale * 4
-        char_scale = scale * 5
-        eye_white_left_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right_white_ket = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left_white_ket.get_left() + pup_radius * RIGHT)
-        pupil_right_white_ket = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right_white_ket.get_left() + pup_radius * RIGHT)
-        eye_left_white_ket = VGroup(eye_white_left_white_ket, pupil_left_white_ket).shift(LEFT * eye_width)
-        eye_right_white_ket = VGroup(eye_white_right_white_ket, pupil_right_white_ket).shift(RIGHT * eye_width)
-        psi_eyes = VGroup(eye_left_white_ket, eye_right_white_ket).scale(1 / 5).shift(LEFT * .1)
-        Psi_white = Tex("\\ket{\\psi}").set_color(GREY_B).scale(char_scale)
-        Psi_white_guy = VGroup(Psi_white, psi_eyes)
-        ######################
+        Psi_white_guyy = lilGuy(text=Tex("\\ket{\\psi}"), look="left")
+        Psi_white_guy = Psi_white_guyy.lilguy
 
         ######################
-        scale = .7
-        pup_radius = scale / 2
-        eye_width = scale * 2
-        eye_height = scale * 4
-        char_scale = scale * 5
-        eye_white_left = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        eye_white_right = Ellipse(width=eye_width, height=eye_height, color=WHITE, fill_opacity=1)
-        pupil_left = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_left.get_right() + pup_radius * LEFT)
-        pupil_right = Circle(radius=pup_radius, color=BLACK, fill_opacity=1).move_to(
-            eye_white_right.get_right() + pup_radius * LEFT)
-        h_eye_left = VGroup(eye_white_left, pupil_left).shift(LEFT * eye_width)
-        h_eye_right = VGroup(eye_white_right, pupil_right).shift(RIGHT * eye_width)
-        h_eyes = VGroup(h_eye_left, h_eye_right).scale(1 / 5).shift(RIGHT * .1)
-        H = Tex("\\hat{H}").set_color(GREY_B).scale(char_scale)
-        H_guy = VGroup(H, h_eyes)
+        H_guyy = lilGuy(text=Tex("\\hat{H}"))
+        H_guy = H_guyy.lilguy
         H_guy.flip()
         ######################
 
@@ -1690,7 +1266,7 @@ class judgment(Scene):
 
         steps = 50
         dt = 0.1
-        evolver = create_evolver(hat_mustache_H, dt)
+        evolver = create_evolver(hat_mustache_H, dt*2)
         for i in np.arange(steps):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
             self.play(*spiky_env.tracker_set_vals(),
@@ -1700,20 +1276,17 @@ class judgment(Scene):
         for i in np.arange(steps/10):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
             self.play(*spiky_env.tracker_set_vals(),
-                      Psi_white_guy.animate.shift(LEFT * 0),
                       Psi_white_guy[1][0][1].animate.shift(RIGHT*dt/3),
                       Psi_white_guy[1][1][1].animate.shift(RIGHT*dt/3),
                       run_time=dt)
         for i in np.arange(steps/5):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
             self.play(*spiky_env.tracker_set_vals(),
-                      Psi_white_guy.animate.shift(LEFT * 0),
                       run_time=dt)
         self.play(
             H_guy.animate.set_opacity(0.2),
             H_guy_mustache.animate.set_opacity(1),
             mustache.animate.set_opacity(1),
-            Psi_white_guy.animate.shift(LEFT * 0),
         )
         for i in np.arange(steps/10):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
@@ -1725,24 +1298,20 @@ class judgment(Scene):
             self.play(*spiky_env.tracker_set_vals(),
                       Psi_white_guy[1][0][1].animate.shift(UP*dt/3),
                       Psi_white_guy[1][1][1].animate.shift(UP*dt/3),
-                      Psi_white_guy.animate.shift(LEFT * 0),
                       run_time=dt)
         for i in np.arange(4):
             spiky_env.vec = np.dot(evolver, spiky_env.vec)
             self.play(*spiky_env.tracker_set_vals(),
-                      Psi_white_guy.animate.shift(LEFT * 0),
                       run_time=dt)
         for i in np.arange(steps/10):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
             self.play(*spiky_env.tracker_set_vals(),
                       Psi_white_guy[1][0][1].animate.shift(DOWN*2*dt/3.1),
                       Psi_white_guy[1][1][1].animate.shift(DOWN*2*dt/3.1),
-                      Psi_white_guy.animate.shift(LEFT * 0),
                       run_time=dt)
         for i in np.arange(4):
             spiky_env.vec = np.dot(evolver, spiky_env.vec)
             self.play(*spiky_env.tracker_set_vals(),
-                      Psi_white_guy.animate.shift(LEFT * 0),
                       run_time=dt)
         for i in np.arange(steps/5):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
@@ -1754,52 +1323,28 @@ class judgment(Scene):
             self.play(*spiky_env.tracker_set_vals(),
                       Psi_white_guy[1][0][1].animate.shift(UP*dt/3.1),
                       Psi_white_guy[1][1][1].animate.shift(UP*dt/3.1),
-                      Psi_white_guy.animate.shift(LEFT * 0),
                       run_time=dt)
         for i in np.arange(steps):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
             self.play(*spiky_env.tracker_set_vals(),
                       Psi_white_guy.animate.shift((RIGHT) * dt/2),
                       run_time=dt/2)
-        spiky_env.vec = np.dot(evolver, spiky_env.vec)
         self.play(
-            *spiky_env.tracker_set_vals(),
             mustache.animate.set_opacity(0.2),
             H_guy_mustache.animate.set_opacity(0.2),
             hat.animate.set_opacity(1),
-            Psi_white_guy.animate.shift(LEFT * 0),
             H_guy_hat.animate.set_opacity(1)
         )
         Psi_white_guy.clear_updaters()
-        self.play(FadeOut(Psi_white_guy),
-                  run_time = 0.3)
+        self.play(FadeOut(Psi_white_guy),run_time = 0.3)
         Psi_white_guy[0].set_color(hat_1_hex_color)
-        self.play(FadeIn(Psi_white_guy),
-                  Psi_white_guy.animate.shift(LEFT * 0),
-                  run_time = 0.6)
+        self.play(FadeIn(Psi_white_guy), run_time = 0.6)
         for i in np.arange(steps/10):
             spiky_env.vec = np.dot(evolver,spiky_env.vec)
-            self.play(Psi_white_guy[1][0][1].animate.shift((LEFT/3+UP/4)*dt),
-                      Psi_white_guy[1][1][1].animate.shift((LEFT/3+UP/4)*dt),
+            self.play(*spiky_env.tracker_set_vals(),
+                      Psi_white_guy[1][0][1].animate.shift(LEFT*dt/3),
+                      Psi_white_guy[1][1][1].animate.shift(LEFT*dt/3),
                       run_time=dt)
         self.wait(0.3)
         self.play(Psi_white_guy.animate.shift((LEFT + UP) * 8),
                   run_time=10)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

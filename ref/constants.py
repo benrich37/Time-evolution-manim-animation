@@ -1,25 +1,5 @@
-from manimlib import *
 import numpy as np
-
-sig_x = np.array([[0, 1],[1,0]])
-sig_y = np.array([[0, -1j],[1j, 0]])
-sig_z = np.array([[1, 0],[0, -1]])
-z_vals, z_U = np.linalg.eig(sig_z)
-z_U_dag = np.linalg.inv(z_U)
-x_vals, x_U = np.linalg.eig(sig_x)
-x_U_dag = np.linalg.inv(x_U)
-y_vals, y_U = np.linalg.eig(sig_y)
-y_U_dag = np.linalg.inv(y_U)
-sig_z_pert = np.array([[0.9, 0.1],[-0.1, -0.9]])
-z_pert_vals, z_pert_U = np.linalg.eig(sig_z_pert)
-z_pert_U_dag = np.linalg.inv(z_pert_U)
-
-z_p = np.array([1,0],dtype=complex)
-z_m = np.array([0,1],dtype=complex)
-x_p = np.array([1,1],dtype=complex) * (1/np.sqrt(2))
-x_m = np.array([1,-1],dtype=complex) * (1/np.sqrt(2))
-y_p = np.array([1,1j],dtype=complex) * (1/np.sqrt(2))
-y_m = np.array([1,-1j],dtype=complex) * (1/np.sqrt(2))
+from methods.utils import rgb_to_hex
 
 red = np.array([[1],[0],[0]],dtype=complex)*(1/np.sqrt(2))
 green = np.array([[0],[1],[0]],dtype=complex)*(1/np.sqrt(2))
@@ -68,24 +48,34 @@ hat_2_color_array = np.abs(hat_U[2])
 # def rgb_to_hex(r, g, b):
 #   return ('{:X}{:X}{:X}').format(r, g, b)
 
-def rgb_to_hex(r,g,b):
-    return "#{:02x}{:02x}{:02x}".format(r,g,b)
-
-# hex_red = rgb_to_hex((252,3,3))
-# hex_green = rgb_to_hex((3,252,3))
-hex_blue = rgb_to_hex(3,3,252)
-hex_red = rgb_to_hex(252,3,3)
-hex_green = rgb_to_hex(3,252,3)
+hex_blue = rgb_to_hex(3, 3, 252)
+hex_red = rgb_to_hex(252, 3, 3)
+hex_green = rgb_to_hex(3, 252, 3)
 
 
 
 # hat_0_hex_color = rgb_to_hex((int(256*hat_0_color_array[0]), int(256*hat_0_color_array[1]), int(256*hat_0_color_array[2])))
 # hat_1_hex_color = rgb_to_hex((int(256*hat_1_color_array[0]), int(256*hat_1_color_array[1]), int(256*hat_1_color_array[2])))
 # hat_2_hex_color = rgb_to_hex((int(256*hat_2_color_array[0]), int(256*hat_2_color_array[1]), int(256*hat_2_color_array[2])))
-hat_0_hex_color = rgb_to_hex(int(256*hat_0_color_array[0]), int(256*hat_0_color_array[1]), int(256*hat_0_color_array[2]))
-hat_1_hex_color = rgb_to_hex(int(256*hat_1_color_array[0]), int(256*hat_1_color_array[1]), int(256*hat_1_color_array[2]))
-hat_2_hex_color = rgb_to_hex(int(256*hat_2_color_array[0]), int(256*hat_2_color_array[1]), int(256*hat_2_color_array[2]))
+hat_0_hex_color = rgb_to_hex(int(256 * hat_0_color_array[0]), int(256 * hat_0_color_array[1]), int(256 * hat_0_color_array[2]))
+hat_1_hex_color = rgb_to_hex(int(256 * hat_1_color_array[0]), int(256 * hat_1_color_array[1]), int(256 * hat_1_color_array[2]))
+hat_2_hex_color = rgb_to_hex(int(256 * hat_2_color_array[0]), int(256 * hat_2_color_array[1]), int(256 * hat_2_color_array[2]))
 
-
-
-
+sig_x = np.array([[0, 1],[1,0]])
+sig_y = np.array([[0, -1j],[1j, 0]])
+sig_z = np.array([[1, 0],[0, -1]])
+z_vals, z_U = np.linalg.eig(sig_z)
+x_vals, x_U = np.linalg.eig(sig_x)
+y_vals, y_U = np.linalg.eig(sig_y)
+z_U_dag = np.linalg.inv(z_U)
+x_U_dag = np.linalg.inv(x_U)
+y_U_dag = np.linalg.inv(y_U)
+sig_z_pert = np.array([[0.9, 0.1],[-0.1, -0.9]])
+z_pert_vals, z_pert_U = np.linalg.eig(sig_z_pert)
+z_pert_U_dag = np.linalg.inv(z_pert_U)
+z_p = np.array([1,0],dtype=complex)
+z_m = np.array([0,1],dtype=complex)
+x_p = np.array([1,1],dtype=complex) * (1/np.sqrt(2))
+x_m = np.array([1,-1],dtype=complex) * (1/np.sqrt(2))
+y_p = np.array([1,1j],dtype=complex) * (1/np.sqrt(2))
+y_m = np.array([1,-1j],dtype=complex) * (1/np.sqrt(2))
